@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Theme tokens
+   - Light mode = default (:root)
+   - Dark mode  = .dark class on <html>
+   Everything else in the app should use the semantic classes
+   below (panel-glass, text-heading, text-muted, ...) instead
+   of raw Tailwind color utilities, so both themes stay in sync.
+   ========================================================= */
+:root {
+  color-scheme: light;
+
+  --bg: 244 245 247;
+  --bg-gradient-a: 255 255 255;
+  --bg-gradient-b: 226 232 236;
+
+  --panel-bg: 255 255 255;
+  --panel-bg-alpha: 0.55;
+  --panel-border: 15 23 42;
+  --panel-border-alpha: 0.08;
+  --panel-blur: 18px;
+
+  --inset-bg: 15 23 42;
+  --inset-bg-alpha: 0.04;
+
+  --text-heading: 15 23 42;
+  --text-body: 51 65 85;
+  --text-muted: 100 116 139;
+  --text-faint: 148 163 184;
+
+  --nav-active-bg: 15 23 42;
+  --nav-active-bg-alpha: 0.08;
+  --btn-ghost-hover: 15 23 42;
+  --btn-ghost-hover-alpha: 0.06;
+
+  --scrollbar-thumb: 203 213 225;
+  --scrollbar-thumb-hover: 148 163 184;
+
+  --signal-teal: 59 130 246;
+  --signal-teal-strong: 15 118 110;
+  --signal-red: 239 68 68;
+  --signal-amber: 180 83 9;
+  --on-signal: 255 255 255;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: 7 9 11;
+  --bg-gradient-a: 12 16 19;
+  --bg-gradient-b: 4 5 6;
+
+  --panel-bg: 31 31 31;
+  --panel-bg-alpha: 0.55;
+  --panel-border: 255 255 255;
+  --panel-border-alpha: 0.08;
+  --panel-blur: 18px;
+
+  --inset-bg: 255 255 255;
+  --inset-bg-alpha: 0.04;
+
+  --text-heading: 248 250 252;
+  --text-body: 203 213 225;
+  --text-muted: 100 116 139;
+  --text-faint: 71 85 105;
+
+  --nav-active-bg: 255 255 255;
+  --nav-active-bg-alpha: 0.09;
+  --btn-ghost-hover: 255 255 255;
+  --btn-ghost-hover-alpha: 0.06;
+
+  --scrollbar-thumb: 42 51 59;
+  --scrollbar-thumb-hover: 61 73 82;
+
+  --signal-teal: 1 200 100;
+  --signal-teal-strong: 20 184 166;
+  --signal-red: 239 68 68;
+  --signal-amber: 240 180 41;
+  --on-signal: 4 8 10;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply antialiased;
+  color: rgb(var(--text-body));
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgb(var(--bg-gradient-a) / 0.6), transparent 60%),
+    radial-gradient(1000px 700px at 110% 10%, rgb(var(--bg-gradient-b) / 0.5), transparent 55%),
+    rgb(var(--bg));
+  background-attachment: fixed;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: rgb(var(--signal-teal) / 0.3);
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(var(--scrollbar-thumb)); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--scrollbar-thumb-hover)); }
+
+.focus-ring { outline: none; }
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 2px rgb(var(--signal-teal) / 0.6);
+}
+
+/* ---- Semantic surfaces ---- */
+
+.panel-glass {
+  background: rgb(var(--panel-bg) / var(--panel-bg-alpha));
+  border: 1px solid rgb(var(--panel-border) / var(--panel-border-alpha));
+  backdrop-filter: blur(var(--panel-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--panel-blur)) saturate(140%);
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.06) inset,
+    0 16px 40px -20px rgb(0 0 0 / 0.35);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.surface-inset {
+  background: rgb(var(--inset-bg) / var(--inset-bg-alpha));
+  border: 1px solid rgb(var(--panel-border) / calc(var(--panel-border-alpha) * 1.4));
+}
+
+.surface-header {
+  background: rgb(var(--panel-bg) / 0.65);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid rgb(var(--panel-border) / var(--panel-border-alpha));
+}
+
+/* ---- Semantic text ---- */
+.text-heading { color: rgb(var(--text-heading)); }
+.text-body-c { color: rgb(var(--text-body)); }
+.text-muted { color: rgb(var(--text-muted)); }
+.text-faint { color: rgb(var(--text-faint)); }
+
+/* ---- Nav / buttons ---- */
+.nav-link {
+  color: rgb(var(--text-muted));
+  border-radius: 9999px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.nav-link:hover {
+  color: rgb(var(--text-heading));
+  background: rgb(var(--btn-ghost-hover) / var(--btn-ghost-hover-alpha));
+}
+.nav-link-active {
+  color: rgb(var(--text-heading));
+  background: rgb(var(--nav-active-bg) / var(--nav-active-bg-alpha));
+}
+
+.btn-ghost {
+  border: 1px solid rgb(var(--panel-border) / calc(var(--panel-border-alpha) * 1.6));
+  color: rgb(var(--text-muted));
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.btn-ghost:hover {
+  background: rgb(var(--btn-ghost-hover) / var(--btn-ghost-hover-alpha));
+  color: rgb(var(--text-heading));
+}
+
+.btn-primary {
+  background: rgb(var(--signal-teal));
+  color: rgb(4 8 10);
+}
+.btn-primary:hover { filter: brightness(1.08); }
+
+.divider {
+  height: 1px;
+  background: rgb(var(--panel-border) / calc(var(--panel-border-alpha) * 1.6));
+}
+
+.row-hover:hover {
+  background: rgb(var(--btn-ghost-hover) / var(--btn-ghost-hover-alpha));
+}
+
+/* ---- Signal color utilities (theme-aware) ---- */
+.text-signal-teal { color: rgb(var(--signal-teal)); }
+.text-signal-red { color: rgb(var(--signal-red)); }
+.text-signal-amber { color: rgb(var(--signal-amber)); }
+.bg-signal-teal { background-color: rgb(var(--signal-teal)); }
+.bg-signal-red { background-color: rgb(var(--signal-red)); }
+.text-on-signal { color: rgb(var(--on-signal)); }
+.range-teal { accent-color: rgb(var(--signal-teal)); }
+
+.chip-amber {
+  color: rgb(var(--signal-amber));
+  background: rgb(var(--signal-amber) / 0.12);
+  border: 1px solid rgb(var(--signal-amber) / 0.3);
+}
+.chip-red-outline {
+  color: rgb(var(--signal-red));
+}
+.chip-red-outline:hover {
+  background: rgb(var(--signal-red) / 0.1);
+}
+
+.border-subtle { border-color: rgb(var(--panel-border) / calc(var(--panel-border-alpha) * 1.6)); }
+
+.hover-surface:hover {
+  background: rgb(var(--btn-ghost-hover) / var(--btn-ghost-hover-alpha));
+}
+
+.chip-active {
+  background: rgb(var(--nav-active-bg) / var(--nav-active-bg-alpha));
+  color: rgb(var(--text-heading));
+}
